@@ -29,7 +29,7 @@ module.exports = function(grunt) {
 			grunt.log.error(pluginName + ' config does not contained expected property "destination".');
     	}
 
-	    var output = [],
+	    var output = { resources: [] },
 	    	config = this.options({
 	      		files : grunt.config('filenamesToJson').files,
 	      		destination :  grunt.config('filenamesToJson').destination,
@@ -42,7 +42,7 @@ module.exports = function(grunt) {
 			config.options.extensions = false;
 
 		// search for files
-		globsync.glob(config.files).forEach(function(filepath) {
+		globsync.glob(config.files, { dot: true }).forEach(function(filepath) {
 			var file = filepath;
 			if (!config.options.fullPath)
 				file = path.basename(file);
@@ -50,7 +50,7 @@ module.exports = function(grunt) {
 			if (!config.options.extensions)
 				file = file.substring(0, file.length - path.extname(file).length);
 
-	  		output.push(file);
+	  		output.resources.push({ name: file });
 		});
 		
 		// create destination write folder if it doesn't exist

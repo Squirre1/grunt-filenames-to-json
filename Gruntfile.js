@@ -34,21 +34,24 @@ module.exports = function(grunt) {
         files: '<%= jshint.test.src %>',
         tasks: ['jshint:test', 'nodeunit']
       },
+      target: {
+        options: { dot: true },
+      },
     },
 
     // test call, generates list of all js file in this project folder
     filenamesToJson : {
       options : {
         // true if full path should be included, default is false
-        fullPath : false,
+        fullPath : true,
         // true if file extension should be included, default is false 
         extensions : true
       },
       // any valid glob
-      files : '**/*.js',
+      files : '**/**.**',
 
         // path to write json to
-      destination : 'javascriptFileNames.json'
+      destination : 'resources.json'
     }    
   });
 
